@@ -10,10 +10,12 @@ import {getPageInfo} from '../lib/pages';
 import '../styles/style.scss';
 import {getPathAndQuery} from "../lib/utils";
 import * as PropTypes from "prop-types";
-import * as router from "next/dist/shared/lib/router/router";
+import * as internalRouter from "next/dist/shared/lib/router/router";
 import jahia from "../jahia";
+import { useRouter } from "next/router";
+import {CxsCtxProvider} from "../lib/cxs";
 
-const previousResolveHref = router.resolveHref;
+const previousResolveHref = internalRouter.resolveHref;
 
 function MyApp({Component, pageProps: {apolloState, ...pageProps}}) {
 
@@ -27,12 +29,31 @@ function MyApp({Component, pageProps: {apolloState, ...pageProps}}) {
         // import("../public/static/js/main.js");
     }, []);
 
-    if (pageProps.isPreview && !router.resolveHref.patched) {
-        router.resolveHref = (router, href, resolveAs) => {
+    const nextRouter = useRouter()
+    useEffect(() => {
+        const handleRouteChange = (url) => {
+            console.log(`App is changing to ${url}`)
+            if (typeof window !== "undefined" && window.wem) {
+                window.wem.contextLoaded = false
+                window.wem.loadContext();
+            }
+        }
+
+        nextRouter.events.on('routeChangeComplete', handleRouteChange)
+
+        // If the component is unmounted, unsubscribe
+        // from the event with the `off` method:
+        return () => {
+            nextRouter.events.off('routeChangeComplete', handleRouteChange)
+        }
+    }, []);
+
+    if (pageProps.isPreview && !internalRouter.resolveHref.patched) {
+        internalRouter.resolveHref = (router, href, resolveAs) => {
             console.log('[_app.resolveHref] href : ',href);
             return previousResolveHref(router, href.startsWith('/') ? jahia.paths.preview + '/' + pageProps.locale + href : href, resolveAs);
         }
-        router.resolveHref.patched = true
+        internalRouter.resolveHref.patched = true
     }
 
     if (process.browser && apolloState) {
@@ -48,7 +69,9 @@ function MyApp({Component, pageProps: {apolloState, ...pageProps}}) {
         }}
         >
             <ApolloProvider client={client}>
-                <Component {...pageProps}/>
+                <CxsCtxProvider>
+                    <Component {...pageProps}/>
+                </CxsCtxProvider>
             </ApolloProvider>
         </JahiaCtxProvider>
     )
