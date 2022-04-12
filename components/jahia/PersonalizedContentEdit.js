@@ -1,11 +1,8 @@
-import React, {useEffect} from 'react';
-import ReactDOM from "react-dom";
+import React, {useEffect, useRef} from 'react';
 import {JahiaCtx} from "../../lib/context";
 import {gql, useQuery} from "@apollo/client";
-import components from "../index";
 import * as PropTypes from "prop-types";
 import {JahiaComponent} from "./JahiaComponent";
-import {Button} from '@jahia/moonstone/dist/components/Button';
 
 export function PersonalizedContentEdit({id}) {
     const {workspace, locale, isEditMode} = React.useContext(JahiaCtx);
@@ -43,6 +40,23 @@ export function PersonalizedContentEdit({id}) {
         }
     });
 
+    const next = (e) => {
+        setIndex(index => index < data.jcr.nodeById.children.nodes.length - 1 ? index + 1 : index)
+    }
+    const prev = (e) => {
+        setIndex(index => index > 0 ? index - 1 : index)
+    }
+
+    const control = useRef();
+    useEffect(() => {
+        control.current.addEventListener('next', next);
+        control.current.addEventListener('prev', prev);
+        return () => {
+            control.current.removeEventListener('next', next)
+            control.current.removeEventListener('prev', prev);
+        }
+    })
+
     if (loading) {
         return "loading";
     }
@@ -51,20 +65,16 @@ export function PersonalizedContentEdit({id}) {
         return <div>Error when loading ${JSON.stringify(error)}</div>
     }
 
-    const next = (e) => {
-        setIndex(index => index < data.jcr.nodeById.children.nodes.length - 1 ? index + 1 : index)
-    }
-    const prev = (e) => {
-        setIndex(index => index > 0 ? index - 1 : index)
-    }
-
     return (
-        <div>
-            Personalized content - edition
-            <Button label="<" onClick={prev}/> {index + 1}/{data.jcr.nodeById.children.nodes.length}
-            <Button label=">" onClick={next}/>
+        <>
+            <div
+                ref={control}
+                className="personalizationControl"
+                data-value={`${index + 1} / ${data.jcr.nodeById.children.nodes.length}`}
+            />
+            Personalized Content
             <JahiaComponent node={data.jcr.nodeById.children.nodes[index]}/>
-        </div>
+        </>
     );
 }
 
