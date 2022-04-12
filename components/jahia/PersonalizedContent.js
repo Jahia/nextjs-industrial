@@ -3,7 +3,6 @@ import {JahiaCtx} from "../../lib/context";
 import * as PropTypes from "prop-types";
 import {PersonalizedContentEdit} from "./PersonalizedContentEdit";
 import {PersonalizedContentLive} from "./PersonalizedContentLive";
-import {CxsCtxProvider} from "../../lib/cxs";
 
 export function PersonalizedContent(props) {
     const {isEditMode} = useContext(JahiaCtx);

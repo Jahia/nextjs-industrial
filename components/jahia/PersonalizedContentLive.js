@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useRef} from 'react';
 import {JahiaCtx} from "../../lib/context";
 import {gql, useQuery} from "@apollo/client";
 import * as PropTypes from "prop-types";

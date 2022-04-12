@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {JahiaCtx} from "../../lib/context";
 import CarouselEdit from "./edit";
 import dynamic from "next/dynamic";
-import * as PropTypes from "prop-types";
 
 const CarouselFront = dynamic(
     () => import("./live"),
