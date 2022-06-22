@@ -69,7 +69,7 @@ function Nav({base, path}) {
         title: property(name: $title, language: $language) { value }
     }
     ${CORE_NODE_FIELDS}`;
-    console.log(`[Nav] base : ${base}, workspace: ${workspace}, locale: ${locale}, title: ${contentTypes.PROPS.TITLE}, MenuItem: ${contentTypes.MENU_ITEM}`);
+    // console.log(`[Nav] base : ${base}, workspace: ${workspace}, locale: ${locale}, title: ${contentTypes.PROPS.TITLE}, MenuItem: ${contentTypes.MENU_ITEM}`);
 
     const {data, error, loading} =useQuery(getSitePages, {
         variables: {

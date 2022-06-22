@@ -36,6 +36,8 @@ function Hero({id}) {
         }
     });
 
+
+
     if (loading) {
         return "loading";
     }

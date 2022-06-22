@@ -36,15 +36,15 @@ function LinkTo({content,locale,fallback,className,children}) {
 
 
     let Component = NextLink;
-    let url = content.externalLink?.value;
+    let url = content.externalLink;
 
-    if(content.internalLink?.node){
+    if(content.internalLink){
         Component = CmsLink;
-        url = content.internalLink.node.path
+        url = content.internalLink.path
     }
     return(
         <Component href={url} locale={locale}>
-            <a target={content.linkTarget?.value} className={className}>
+            <a target={content.linkTarget} className={className}>
                 {children}
             </a>
         </Component>

@@ -7,7 +7,6 @@ import {ContentList} from "./jahia/ContentList";
 import BS4Grid from "./jahia/BS4/Grid";
 import ImageReferenceLink from "./jahia/Image/ImageReferenceLink/ImageReferenceLink";
 import NavMenuText from "./jahia/NavMenuText";
-// import RichText from "./jahia/RichText";
 
 import Widen from "./jahia/Widen/Widen";
 
