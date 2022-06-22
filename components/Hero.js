@@ -1,5 +1,5 @@
 import React from "react";
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 import {gql, useQuery} from "@apollo/client";
 import * as PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
 import classnames from "classnames";
 import {getImageURI} from "./jahia/utils";
-import { CORE_NODE_FIELDS } from './jahia/GQL/fragments';
 
 //TODO use xss to clean body
 function Hero({id}) {

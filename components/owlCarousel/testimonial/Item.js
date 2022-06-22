@@ -1,10 +1,9 @@
 import React from "react";
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 import {gql, useQuery} from "@apollo/client";
 import styles from './item.module.css'
 import classNames from 'classnames';
 import * as PropTypes from "prop-types";
-import { CORE_NODE_FIELDS } from '../../jahia/GQL/fragments';
 import {getImageURI} from "../../jahia/utils";
 import "@fancyapps/ui/dist/fancybox.css";
 

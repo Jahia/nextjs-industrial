@@ -1,14 +1,12 @@
 import React from 'react';
 import classNames from "classnames";
-import {JahiaCtx, JahiaModuleTag} from "@jahia/nextjs-lib";
+import {JahiaCtx, JahiaModuleTag, RichText,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 
 import styles from './halfBlock.module.css'
 import Image from "./images/HalfBlock";
-import RichText from "./jahia/RichText";
 import cms from "../jahia";
 import * as PropTypes from "prop-types";
 import {gql, useQuery} from "@apollo/client";
-import {CORE_NODE_FIELDS} from './jahia/GQL/fragments';
 
 
 function ChildComponent({isNodeEmpty,path,nodetypes,classname,children}) {

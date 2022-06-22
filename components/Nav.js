@@ -1,16 +1,14 @@
 import React, {useEffect} from "react";
 // import Link from "next/link";
 import Link from "./jahia/CmsLink";
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 import {gql, useQuery} from "@apollo/client";
 import {contentTypes} from "./jahia/common";
 import classnames from "classnames";
 import * as PropTypes from "prop-types";
-import { CORE_NODE_FIELDS } from './jahia/GQL/fragments';
 
 function Nav({base, path}) {
-    const {workspace, locale, isEditMode} = React.useContext(JahiaCtx);
-    // const [navTree, setNavTree] = React.useState({});
+    const {workspace, locale} = React.useContext(JahiaCtx);
     useEffect(() => {
         if (process.browser) {
             $('nav .dropdown').hover(function(){
@@ -71,7 +69,7 @@ function Nav({base, path}) {
         title: property(name: $title, language: $language) { value }
     }
     ${CORE_NODE_FIELDS}`;
-    //console.log(`[Nav] base : ${base}, workspace: ${workspace}, locale: ${locale}, title: ${contentTypes.PROPS.TITLE}, MenuItem: ${contentTypes.MENU_ITEM}`);
+    console.log(`[Nav] base : ${base}, workspace: ${workspace}, locale: ${locale}, title: ${contentTypes.PROPS.TITLE}, MenuItem: ${contentTypes.MENU_ITEM}`);
 
     const {data, error, loading} =useQuery(getSitePages, {
         variables: {
@@ -92,6 +90,7 @@ function Nav({base, path}) {
         return "loading";
     }
     if (error) {
+        console.log(`[nav] locale: ${locale}`);
         console.log(error);
         return <div>Error when loading ${JSON.stringify(error)}</div>
     }

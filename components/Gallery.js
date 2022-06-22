@@ -1,11 +1,10 @@
 import React from "react";
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 import {gql, useQuery} from "@apollo/client";
 import * as PropTypes from "prop-types";
 import {PlusLg} from "react-bootstrap-icons";
 
 import CmsImage from "./jahia/Image/Default";
-import { CORE_NODE_FIELDS } from './jahia/GQL/fragments';
 import {LINK_TO_FIELDS} from "./GQL/fragments";
 import LinkTo from "./LinkTo";
 

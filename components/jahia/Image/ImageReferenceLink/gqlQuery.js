@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import { CORE_NODE_FIELDS } from '../../GQL/fragments';
+import {CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 
 export const queryImageRef = gql`query (
         $workspace:Workspace!,

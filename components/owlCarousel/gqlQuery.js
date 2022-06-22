@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import { CORE_NODE_FIELDS } from '../jahia/GQL/fragments';
+import {CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 
 export const queryCarousel = gql`query (
         $workspace:Workspace!,
@@ -8,7 +8,6 @@ export const queryCarousel = gql`query (
             workspace
             nodeById(uuid:$id) {
                 ...CoreNodeFields
-                mixins:mixinTypes{ name }
                 carouselType:property(name:"carouselType") { value }
                 options:property(name:"options") { value }
                 class:property(name:"class") { value }

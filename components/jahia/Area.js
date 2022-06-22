@@ -1,9 +1,7 @@
 import React from "react";
 import {gql, useQuery} from "@apollo/client";
-import {JahiaCtx, MainResourceCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx, MainResourceCtx,JahiaComponent, CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
-import {JahiaComponent} from "@jahia/nextjs-lib";
-import {CORE_NODE_FIELDS} from './GQL/fragments';
 
 function Area({name, tagProps, componentProps}) {
     const {workspace, isEditMode, locale} = React.useContext(JahiaCtx);

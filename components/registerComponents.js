@@ -1,5 +1,5 @@
 import React from "react";
-import {componentByMixin, componentsByType, componentRenderingModuleTag} from "@jahia/nextjs-lib";
+import {componentByMixin, componentsByType, componentRenderingModuleTag, RichText} from "@jahia/nextjs-lib";
 
 import {PersonalizedContent} from "./jahia/PersonalizedContent";
 import {PersonalizedList} from "./jahia/PersonalizedList";
@@ -7,7 +7,7 @@ import {ContentList} from "./jahia/ContentList";
 import BS4Grid from "./jahia/BS4/Grid";
 import ImageReferenceLink from "./jahia/Image/ImageReferenceLink/ImageReferenceLink";
 import NavMenuText from "./jahia/NavMenuText";
-import RichText from "./jahia/RichText";
+// import RichText from "./jahia/RichText";
 
 import Widen from "./jahia/Widen/Widen";
 
@@ -26,7 +26,7 @@ export const registerComponents = () => {
         'bootstrap4nt:grid':BS4Grid,
         'jnt:imageReferenceLink':ImageReferenceLink,
         'jnt:navMenuText':NavMenuText,
-        'jnt:bigText': RichText,
+        // 'jnt:bigText': RichText,
         'wemnt:personalizedContent': PersonalizedContent,
 
         //Community Module

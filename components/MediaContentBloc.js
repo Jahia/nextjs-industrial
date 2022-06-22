@@ -1,9 +1,8 @@
 import React from "react";
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
 import {gql, useQuery} from "@apollo/client";
 import * as PropTypes from "prop-types";
 import * as Icons from "react-bootstrap-icons";
-import { CORE_NODE_FIELDS } from './jahia/GQL/fragments';
 
 function MediaContentBloc({id}) {
     const {workspace, locale} = React.useContext(JahiaCtx);
