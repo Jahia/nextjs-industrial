@@ -1,13 +1,11 @@
 import React from 'react';
 import classNames from "classnames";
-import {JahiaCtx, JahiaModuleTag, RichText,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
+import {JahiaCtx, JahiaModuleTag, RichText, useNode} from "@jahia/nextjs-lib";
 
 import styles from './halfBlock.module.css'
 import Image from "./images/HalfBlock";
 import cms from "../jahia";
 import * as PropTypes from "prop-types";
-import {gql, useQuery} from "@apollo/client";
-
 
 function ChildComponent({isNodeEmpty,path,nodetypes,classname,children}) {
     const {isEditMode} = React.useContext(JahiaCtx);
@@ -37,36 +35,41 @@ ChildComponent.propTypes = {
 };
 
 
+// *** Query sample without usage of useNode() ***
+// const {workspace,locale,isEditMode} = React.useContext(JahiaCtx);
+//
+// const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
+//     jcr(workspace: $workspace) {
+//         workspace
+//         nodeById(uuid: $id) {
+//             ...CoreNodeFields
+//             imagePosition:property(name:"imagePosition"){ value }
+//             children{
+//                 nodes{
+//                     ...CoreNodeFields
+//                     media: property(language:$language,name:"mediaNode"){
+//                         refNode {...CoreNodeFields}
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+// ${CORE_NODE_FIELDS}`;
+//
+// const {data, error, loading} = useQuery(getContent, {
+//     variables: {
+//         workspace,
+//         id,
+//         language:locale
+//     }
+// });
+// const content = data?.jcr?.nodeById;
 
 function HalfBlock({id}) {
-    const {workspace,locale,isEditMode} = React.useContext(JahiaCtx);
+    const {isEditMode} = React.useContext(JahiaCtx);
 
-    const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
-        jcr(workspace: $workspace) {
-            workspace
-            nodeById(uuid: $id) {
-                ...CoreNodeFields
-                imagePosition:property(name:"imagePosition"){ value }
-                children{
-                    nodes{
-                        ...CoreNodeFields
-                        media: property(language:$language,name:"mediaNode"){
-                            refNode {...CoreNodeFields}
-                        }
-                    }
-                }
-            }
-        }
-    }
-    ${CORE_NODE_FIELDS}`;
-
-    const {data, error, loading} = useQuery(getContent, {
-        variables: {
-            workspace,
-            id,
-            language:locale
-        }
-    });
+    const {data, error, loading} = useNode(id,["imagePosition","mediaNode"],true)
 
     if (loading) {
         return "loading";
@@ -77,25 +80,25 @@ function HalfBlock({id}) {
     }
 
     const getChildNodeOfType = ({node, nodeType}) => {
-        if (!Array.isArray(node.children?.nodes)) {
+        if (!Array.isArray(node.children) || node.children.length === 0) {
             return;
         }
 
-        const childArray = node.children.nodes.filter(node =>
+        const childArray = node.children.filter(node =>
             node.primaryNodeType.name === nodeType
         );
         return childArray[0];
     }
 
-    const content = data?.jcr?.nodeById;
+    const { properties: {imagePosition} } = data;
 
     const imageNode = getChildNodeOfType({
-        node: content,
+        node: data,
         nodeType: cms.contentTypes.HALFBLOCK_IMAGE
     });
 
     const bodyNode = getChildNodeOfType({
-        node: content,
+        node: data,
         nodeType: cms.contentTypes.INDUS_TEXT
     });
 
@@ -103,7 +106,7 @@ function HalfBlock({id}) {
         <section>
             <div className="half d-lg-flex d-block">
                 <div className={classNames("image", {
-                    "order-2": content.imagePosition?.value === "right",
+                    "order-2": imagePosition === "right",
                     [styles.editImageWrapper]: isEditMode
                 })}
                 >
@@ -113,7 +116,7 @@ function HalfBlock({id}) {
                         nodetypes={[imageNode?.primaryNodeType.name || cms.contentTypes.HALFBLOCK_IMAGE]}
                         classname="editImageContainer"
                     >
-                        <Image path={imageNode?.media?.refNode?.path}/>
+                        <Image path={imageNode?.properties?.mediaNode?.path}/>
                     </ChildComponent>
                 </div>
 

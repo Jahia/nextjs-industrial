@@ -12,41 +12,46 @@ import {PlayFill} from "react-bootstrap-icons";
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox.css";
 
+// *** Query sample without usage of useNode() ***
+// const {workspace, isEditMode, locale} = React.useContext(JahiaCtx);
+// const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
+//     jcr(workspace: $workspace) {
+//         workspace
+//         nodeById(uuid: $id) {
+//             ...CoreNodeFields
+//             caption: property(language:$language, name:"caption"){value}
+//             videoLink: property(name:"videoLink"){value}
+//             videoExtPath: property(language:$language,name:"videoExtPath"){value}
+//             videoIntPath: property(language:$language,name:"videoIntPath"){
+//                 node: refNode {
+//                     ...CoreNodeFields
+//                 }
+//             }
+//             media: property(language:$language,name:"mediaNode",){
+//                 node: refNode {
+//                     ...CoreNodeFields
+//                 }
+//             }
+//         }
+//     }
+// }
+// ${CORE_NODE_FIELDS}`;
+//
+// const {data, error, loading} = useQuery(getContent, {
+//     variables: {
+//         workspace,
+//         id,
+//         language: locale,
+//     }
+// });
+// const content = data?.jcr?.nodeById;
+
 //TODO use xss to clean caption
 
 function Item({id}) {
-    const {workspace, isEditMode, locale} = React.useContext(JahiaCtx);
+    const {workspace, isEditMode} = React.useContext(JahiaCtx);
 
-    const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
-        jcr(workspace: $workspace) {
-            workspace
-            nodeById(uuid: $id) {
-                ...CoreNodeFields
-                caption: property(language:$language, name:"caption"){value}
-                videoLink: property(name:"videoLink"){value}
-                videoExtPath: property(language:$language,name:"videoExtPath"){value}
-                videoIntPath: property(language:$language,name:"videoIntPath"){
-                    node: refNode {
-                        ...CoreNodeFields
-                    }
-                }
-                media: property(language:$language,name:"mediaNode",){
-                    node: refNode {
-                        ...CoreNodeFields
-                    }
-                }
-            }
-        }
-    }
-    ${CORE_NODE_FIELDS}`;
-
-    const {data, error, loading} = useQuery(getContent, {
-        variables: {
-            workspace,
-            id,
-            language: locale,
-        }
-    });
+    const {data, error, loading} = useNode(id,["caption","videoExtPath","videoIntPath","mediaNode"])
 
     if (loading) {
         return "loading";
@@ -56,11 +61,12 @@ function Item({id}) {
         return <div>Error when loading ${JSON.stringify(error)}</div>
     }
 
-    const content = data?.jcr?.nodeById;
-    const imageURI = getImageURI({uri: content.media?.node?.path, workspace});
-    const videoLink = content.videoIntPath ?
-        getImageURI({uri: content.videoIntPath.node.path, workspace}) :
-        content.videoExtPath?.value;
+    const {caption,videoExtPath,videoIntPath,mediaNode} = data.properties;
+
+    const imageURI = getImageURI({uri: mediaNode?.path, workspace});
+    const videoLink = videoIntPath ?
+        getImageURI({uri: videoIntPath.path, workspace}) :
+        videoExtPath?.value;
 
     return (
         <>
@@ -73,10 +79,10 @@ function Item({id}) {
                     <img
                         src={imageURI}
                         className="card-img-top"
-                        alt={content.media?.node?.name}
+                        alt={mediaNode?.name}
                     />
                     {/* eslint-disable-next-line react/no-danger */}
-                    <div dangerouslySetInnerHTML={{__html: content.caption?.value}} className={styles.cardBody}/>
+                    <div dangerouslySetInnerHTML={{__html: caption}} className={styles.cardBody}/>
                 </div>}
             {!isEditMode &&
                 <div
@@ -107,7 +113,7 @@ function Item({id}) {
                                 </div>}
 
                                 {/* eslint-disable-next-line react/no-danger */}
-                                <div dangerouslySetInnerHTML={{__html: content.caption?.value || "no caption"}}/>
+                                <div dangerouslySetInnerHTML={{__html: caption || "no caption"}}/>
                             </Col>
                         </Row>
                     </Container>

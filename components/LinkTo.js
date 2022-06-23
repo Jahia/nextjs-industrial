@@ -7,7 +7,8 @@ import classnames from "classnames";
 
 function LinkTo({content,locale,fallback,className,children}) {
     // {[styles[fallback?.class]]:true}
-    if(!content.linkType || !(content.externalLink || content.internalLink)){
+    const {linkType,externalLink,internalLink,linkTarget} = content;
+    if(!linkType || !(externalLink || internalLink)){
         if(fallback.elt){
             function Fallback() {
                 // const eltChildren = [children].flat()
@@ -36,15 +37,15 @@ function LinkTo({content,locale,fallback,className,children}) {
 
 
     let Component = NextLink;
-    let url = content.externalLink;
+    let url = externalLink;
 
-    if(content.internalLink){
+    if(internalLink){
         Component = CmsLink;
-        url = content.internalLink.path
+        url = internalLink.path
     }
     return(
         <Component href={url} locale={locale}>
-            <a target={content.linkTarget} className={className}>
+            <a target={linkTarget} className={className}>
                 {children}
             </a>
         </Component>

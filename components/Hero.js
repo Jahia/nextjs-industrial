@@ -1,42 +1,47 @@
 import React from "react";
-import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
+import {JahiaCtx, useNode} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
-import classnames from "classnames";
+
 import {getImageURI} from "./jahia/utils";
+
+// *** Query sample without usage of useNode() ***
+// const {workspace, locale} = React.useContext(JahiaCtx);
+//
+// const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
+//     jcr(workspace: $workspace) {
+//         workspace
+//         nodeById(uuid: $id) {
+//             ...CoreNodeFields
+//             body: property(language:$language, name:"body"){value}
+//             media: property(language:$language,name:"mediaNode",){
+//                 node: refNode {
+//                     ...CoreNodeFields
+//                 }
+//             }
+//         }
+//     }
+// }
+// ${CORE_NODE_FIELDS}`;
+//
+// const {data, error, loading} = useQuery(getContent, {
+//     variables: {
+//         workspace,
+//         id,
+//         language: locale,
+//     }
+// });
+// const content = data?.jcr?.nodeById;
+// const uri = getImageURI({uri: content.media?.node?.path, workspace});
 
 //TODO use xss to clean body
 function Hero({id}) {
-    const {workspace, locale} = React.useContext(JahiaCtx);
 
-    const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
-        jcr(workspace: $workspace) {
-            workspace
-            nodeById(uuid: $id) {
-                ...CoreNodeFields
-                body: property(language:$language, name:"body"){value}
-                media: property(language:$language,name:"mediaNode",){
-                    node: refNode {
-                        ...CoreNodeFields
-                    }
-                }
-            }
-        }
-    }
-    ${CORE_NODE_FIELDS}`;
+    const {workspace} = React.useContext(JahiaCtx);
 
-    const {data, error, loading} = useQuery(getContent, {
-        variables: {
-            workspace,
-            id,
-            language: locale,
-        }
-    });
-
-
+    const {data, error, loading} = useNode(id,["body","mediaNode"])
 
     if (loading) {
         return "loading";
@@ -46,10 +51,9 @@ function Hero({id}) {
         return <div>Error when loading ${JSON.stringify(error)}</div>
     }
 
-    const content = data?.jcr?.nodeById;
-    const uri = getImageURI({uri: content.media?.node?.path, workspace});
+    const {body,mediaNode} = data.properties;
+    const uri = getImageURI({uri: mediaNode?.path, workspace});
 
-    // className={classnames("text-center","pt-5",{"element-animate":!isEditMode})}
     return (
 
         <div className="inner-page">
@@ -63,7 +67,7 @@ function Hero({id}) {
                             sm={12}
                             md={8}
                             className="text-center pt-5 element-animate"
-                            dangerouslySetInnerHTML={{__html: content.body?.value || 'no body'}}/>
+                            dangerouslySetInnerHTML={{__html: body || 'no body'}}/>
                     </Row>
                 </Container>
             </div>
