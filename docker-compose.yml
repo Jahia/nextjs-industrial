@@ -1,10 +1,10 @@
 version: '3.6'
 
 services:
-  jahia-derby:
+  jahia-next:
     image: jahia/${JAHIA_REPO}:${JAHIA_VERSION}
     hostname: jahia.my.local
-    container_name: jahia-derby
+    container_name: jahia-next
     env_file:
       - .env.local
     environment:
@@ -107,6 +107,7 @@ services:
       - ./templates:/next/templates
       - ./components:/next/components
       - ./lib:/next/lib
+      - ./node_modules/@jahia:/next/node_modules/@jahia
 
     networks:
       - stack
