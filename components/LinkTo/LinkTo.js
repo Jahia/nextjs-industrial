@@ -2,10 +2,10 @@ import React from "react";
 import * as PropTypes from "prop-types";
 import styles from "./linkTo.module.css";
 import NextLink from "next/link";
-import CmsLink from "./jahia/CmsLink";
+import CmsLink from "../jahia/CmsLink";
 import classnames from "classnames";
 
-function LinkTo({content,locale,fallback,className,children}) {
+export function LinkTo({content,locale,fallback,className,children}) {
     // {[styles[fallback?.class]]:true}
     const {linkType,externalLink,internalLink,linkTarget} = content;
     if(!linkType || !(externalLink || internalLink)){
@@ -51,6 +51,7 @@ function LinkTo({content,locale,fallback,className,children}) {
         </Component>
     )
 }
+
 LinkTo.propTypes = {
     content: PropTypes.object.isRequired,
     locale: PropTypes.string,
@@ -58,5 +59,3 @@ LinkTo.propTypes = {
     className:PropTypes.string,
     children: PropTypes.node.isRequired
 };
-
-export default LinkTo;

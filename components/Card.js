@@ -1,8 +1,7 @@
 import React from "react";
 import {JahiaCtx, useNode, DefaultImage} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
-import LinkTo from "./LinkTo";
-import {linkToProperties} from "./GQL/properties";
+import {LinkTo,linkToProperties} from "./LinkTo";
 
 //TODO use xss to clean body
 function Card({id}) {

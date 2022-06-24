@@ -2,8 +2,7 @@ import React from "react";
 import {JahiaCtx, useNode, DefaultImage} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
 import {PlusLg} from "react-bootstrap-icons";
-import {linkToProperties} from "./GQL/properties";
-import LinkTo from "./LinkTo";
+import {LinkTo,linkToProperties} from "./LinkTo";
 
 //TODO use xss to clean body
 function Gallery({id}) {
