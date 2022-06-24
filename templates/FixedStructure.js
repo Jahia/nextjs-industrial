@@ -81,6 +81,7 @@ function FixedStructure({path, templateName}) {
                                     nodetypes:[cms.contentTypes.IMAGE_REF],
                                     listlimit:1
                                 }}
+                                componentProps={{className:"img-fluid"}}
                             />
                         </Col>
                         <Col md={5} className="pr-md-5 mb-5">

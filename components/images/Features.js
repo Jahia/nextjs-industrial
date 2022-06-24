@@ -25,7 +25,7 @@ function FeatureImage({path,alt,className}) {
 FeatureImage.propTypes = {
     path: PropTypes.string,
     alt: PropTypes.string,
-    className: PropTypes.string,
+    className: PropTypes.string
 };
 
 FeatureImage.defaultProps = {

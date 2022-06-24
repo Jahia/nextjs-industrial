@@ -1,5 +1,5 @@
 import React from "react";
-import {componentByMixin, componentsByType, componentRenderingModuleTag, RichText} from "@jahia/nextjs-lib";
+import {componentByMixin,componentsByType,componentRenderingModuleTag,RichText,ImageReferenceLink} from "@jahia/nextjs-lib";
 
 import {PersonalizedContent} from "./jahia/PersonalizedContent";
 import {PersonalizedList} from "./jahia/PersonalizedList";
@@ -15,6 +15,10 @@ import FeatureContentBloc from "./FeatureContentBloc";
 import HalfBlock from "./HalfBlock";
 import MediaContentBloc from "./MediaContentBloc";
 import Card from "./Card";
+
+function ImageReferenceLinkWrapper(props) {
+    return <ImageReferenceLink {...props} className="img-fluid"/>
+}
 
 export const registerComponents = () => {
     Object.assign(componentsByType, {
@@ -36,7 +40,8 @@ export const registerComponents = () => {
         'hicnt:owlcarousel': OwlCarousel,
         'hicnt:halfBlock': HalfBlock,
         'hicnt:mediaContentBloc': MediaContentBloc,
-        'hicnt:card': Card
+        'hicnt:card': Card,
+        'jnt:imageReferenceLink': ImageReferenceLinkWrapper
     });
 
     Object.assign(componentByMixin, {
