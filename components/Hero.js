@@ -66,7 +66,7 @@ function Hero({id}) {
                         <Col
                             sm={12}
                             md={8}
-                            className="text-center pt-5 element-animate"
+                            className="text-center pt-5"
                             dangerouslySetInnerHTML={{__html: body || 'no body'}}/>
                     </Row>
                 </Container>

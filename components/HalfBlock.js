@@ -120,7 +120,7 @@ function HalfBlock({id}) {
                     </ChildComponent>
                 </div>
 
-                <div className="text text-center element-animate">
+                <div className="text text-center">
                     <ChildComponent
                         isNodeEmpty={!bodyNode}
                         path={bodyNode?.path || "body"}
