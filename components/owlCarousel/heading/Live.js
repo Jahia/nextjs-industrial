@@ -6,16 +6,18 @@ import classNames from "classnames";
 
 function OwlCarousel({carousel}) {
 
+    const {uuid,name,children,properties:{options:owlOptions,class:owlClassName}} = carousel;
+
     React.useEffect(() => {
-        if (carousel?.uuid && process.browser) {
+        if (uuid && process.browser) {
             import('owl.carousel').then( () => {
                 // console.debug("[OwlCarousel] launch the carousel in the browser");
 
                 let gqlOptions = {};
                 try {
-                    gqlOptions = JSON.parse(carousel.options?.value)
+                    gqlOptions = JSON.parse(owlOptions)
                 } catch (error) {
-                    console.warn("no options configured by user for the carousel: ", carousel.name)
+                    console.warn("no options configured by user for the carousel: ", name)
                 }
 
                 const options = Object.assign({
@@ -28,7 +30,7 @@ function OwlCarousel({carousel}) {
                     nav: true,
                     autoplayHoverPause: true,
                     dragTouch: false,
-                    navText:[$(`#owl-prev-${carousel.uuid}`),$(`#owl-next-${carousel.uuid}`)],
+                    navText:[$(`#owl-prev-${uuid}`),$(`#owl-next-${uuid}`)],
                     responsive: {
                         0: {items: 1,nav: false},
                         600: {items: 1,nav: false},
@@ -36,18 +38,18 @@ function OwlCarousel({carousel}) {
                     }
                 }, gqlOptions);
                 console.debug("[OwlCarousel] options: ",options);
-                window.jQuery(`#${carousel.uuid}`).owlCarousel(options)
+                window.jQuery(`#${uuid}`).owlCarousel(options)
             })
         }
     }, [carousel]);
 
     return (
         <>
-            <section id={carousel.uuid} className={classNames("home-slider owl-carousel",carousel.class?.value)}>
-                <Items nodes={carousel.children.nodes}/>
+            <section id={uuid} className={classNames("home-slider owl-carousel",owlClassName)}>
+                <Items nodes={children}/>
             </section>
-            <ChevronLeft id={`owl-prev-${carousel.uuid}`}/>
-            <ChevronRight id={`owl-next-${carousel.uuid}`}/>
+            <ChevronLeft id={`owl-prev-${uuid}`}/>
+            <ChevronRight id={`owl-next-${uuid}`}/>
         </>
 
     )

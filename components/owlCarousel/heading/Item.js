@@ -1,6 +1,6 @@
 import React from "react";
-import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
+import {JahiaCtx,useNode} from "@jahia/nextjs-lib";
+// import {gql, useQuery} from "@apollo/client";
 import styles from './item.module.css'
 import classNames from 'classnames';
 import * as PropTypes from "prop-types";
@@ -66,7 +66,7 @@ function Item({id}) {
     const imageURI = getImageURI({uri: mediaNode?.path, workspace});
     const videoLink = videoIntPath ?
         getImageURI({uri: videoIntPath.path, workspace}) :
-        videoExtPath?.value;
+        videoExtPath;
 
     return (
         <>
@@ -94,7 +94,7 @@ function Item({id}) {
                             <Col
                                 sm={12}
                                 lg={7}
-                                className="text-center element-animate"
+                                className="text-center"
                             >
                                 {videoLink &&
                                 <div className="btn-play-wrap mx-auto">

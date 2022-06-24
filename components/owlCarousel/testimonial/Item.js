@@ -1,6 +1,5 @@
 import React from "react";
-import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
+import {JahiaCtx, useNode} from "@jahia/nextjs-lib";
 import styles from './item.module.css'
 import classNames from 'classnames';
 import * as PropTypes from "prop-types";
@@ -10,32 +9,9 @@ import "@fancyapps/ui/dist/fancybox.css";
 //TODO use xss to clean caption
 
 function Item({id}) {
-    const {workspace, isEditMode, locale} = React.useContext(JahiaCtx);
+    const {workspace, isEditMode} = React.useContext(JahiaCtx);
 
-    const getContent = gql`query($workspace: Workspace!, $id: String!,$language:String!){
-        jcr(workspace: $workspace) {
-            workspace
-            nodeById(uuid: $id) {
-                ...CoreNodeFields
-                heading: property(language:$language, name:"heading"){value}
-                testimonial: property(language:$language, name:"testimonial"){value}
-                media: property(language:$language,name:"mediaNode",){
-                    node: refNode {
-                        ...CoreNodeFields
-                    }
-                }
-            }
-        }
-    }
-    ${CORE_NODE_FIELDS}`;
-
-    const {data, error, loading} = useQuery(getContent, {
-        variables: {
-            workspace,
-            id,
-            language: locale,
-        }
-    });
+    const {data, error, loading} = useNode(id,["heading","testimonial","mediaNode"]);
 
     if (loading) {
         return "loading";
@@ -45,14 +21,9 @@ function Item({id}) {
         return <div>Error when loading ${JSON.stringify(error)}</div>
     }
 
-    const content = data?.jcr?.nodeById;
-    const imageURI = getImageURI({uri: content.media?.node?.path, workspace});
-    const videoLink = content.videoIntPath ?
-        getImageURI({uri: content.videoIntPath.node.path, workspace}) :
-        content.videoExtPath?.value;
+    const {heading,testimonial,mediaNode} = data.properties;
+    const imageURI = getImageURI({uri: mediaNode.path, workspace});
 
-    // element-animate
-    // console.log("[owl Heading Item] content :",content);
     return (
         <>
             {isEditMode &&
@@ -64,24 +35,24 @@ function Item({id}) {
                     <img
                         src={imageURI}
                         className="card-img-top"
-                        alt={content.media?.node?.name}
+                        alt={mediaNode.name}
                     />
                     {/* eslint-disable-next-line react/no-danger */}
-                    <div dangerouslySetInnerHTML={{__html: content.heading?.value}} className={styles.cardBody}/>
+                    <div dangerouslySetInnerHTML={{__html: heading}} className={styles.cardBody}/>
                 </div>}
             {!isEditMode &&
                 <div className="item">
                     <div className="block-33 h-100">
                         <div className="vcard d-flex mb-3">
                             <div className="image align-self-center">
-                                <img src={imageURI} alt={content.media?.node?.name}/>
+                                <img src={imageURI} alt={mediaNode.name}/>
                             </div>
                             {/* eslint-disable-next-line react/no-danger */}
-                            <div dangerouslySetInnerHTML={{__html: content.heading?.value}}/>
+                            <div dangerouslySetInnerHTML={{__html: heading}}/>
                         </div>
                         <div className="text">
                             {/* eslint-disable-next-line react/no-danger */}
-                            <div dangerouslySetInnerHTML={{__html: content.testimonial?.value}}/>
+                            <div dangerouslySetInnerHTML={{__html: testimonial}}/>
                         </div>
                     </div>
                 </div>}

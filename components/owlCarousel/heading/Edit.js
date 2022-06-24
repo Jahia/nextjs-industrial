@@ -7,18 +7,18 @@ import {JahiaModuleTag} from "@jahia/nextjs-lib";
 import cms from "../../../jahia";
 
 function OwlCarousel({carousel}) {
-    const {class: carouselClass} = carousel.properties;
+    const {uuid,path,children,properties:{class: owlClassName}} = carousel;
     //Note: JahiaModuleTag is required here to pass the childNodeTypes and enable the "create" btn to add children carousel item
     return (
-        <JahiaModuleTag path={carousel.path} nodetypes={[cms.contentTypes.INDUS_CAROUSEL_HEADING_ITEM]}>
+        <JahiaModuleTag path={path} nodetypes={[cms.contentTypes.INDUS_CAROUSEL_HEADING_ITEM]}>
             <section
-                id={carousel.uuid}
+                id={uuid}
                 className={classNames(
-                    carouselClass,
+                    owlClassName,
                     styles.jOwlCarouselEdit
                 )}
             >
-                <Items nodes={carousel.children}/>
+                <Items nodes={children}/>
             </section>
             {/*Jahia btn placeholder to add a new item*/}
             <JahiaModuleTag path="*" type="placeholder"/>
