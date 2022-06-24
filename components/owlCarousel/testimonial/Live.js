@@ -10,7 +10,7 @@ function OwlCarousel({carousel}) {
     React.useEffect(() => {
         if (uuid && process.browser) {
             import('owl.carousel').then( () => {
-                console.debug("[OwlCarousel] launch the carousel in the browser");
+                // console.debug("[OwlCarousel] launch the carousel in the browser");
 
                 let gqlOptions = {};
                 try {
@@ -34,7 +34,7 @@ function OwlCarousel({carousel}) {
                         1000:{/*stagePadding: 200,*/items:1}
                     }
                 }, gqlOptions);
-                console.debug("[OwlCarousel] options: ",options);
+                console.debug("[OwlCarousel Testimonial Live] options: ",options);
                 window.jQuery(`#${uuid}`).owlCarousel(options)
             })
         }
