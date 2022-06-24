@@ -1,5 +1,8 @@
 {
-  "extends": ["next","xo-react", "plugin:@next/next/recommended"],
+  "extends": ["xo", "xo-react", "next", "plugin:@next/next/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
   "rules": {
     // ESLint base rules
     "indent": [

@@ -36,9 +36,5 @@
     "eslint-config-xo": "^0.40.0",
     "eslint-config-xo-react": "^0.27.0",
     "webpack": "^5.69.1"
-  },
-  "xo": {
-    "extends": "xo-nextjs",
-    "space": 4
   }
 }
