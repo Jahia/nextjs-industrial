@@ -1,7 +1,6 @@
 import React from "react";
-import {JahiaCtx, useNode} from "@jahia/nextjs-lib";
+import {JahiaCtx, useNode, DefaultImage} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
-import CmsImage from "./jahia/Image/Default";
 import LinkTo from "./LinkTo";
 import {linkToProperties} from "./GQL/properties";
 
@@ -20,7 +19,7 @@ function Card({id}) {
     }
 
     const {name, properties:{body,mediaNode}} = data;
-    const ImageComponent = CmsImage;
+    const ImageComponent = DefaultImage;
 
     return (
         <div className="media d-block media-custom text-center">

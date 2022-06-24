@@ -1,11 +1,9 @@
 import React from "react";
-import {JahiaCtx, useNode} from "@jahia/nextjs-lib";
+import {JahiaCtx, useNode, getImageURI} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
-
-import {getImageURI} from "./jahia/utils";
 
 // *** Query sample without usage of useNode() ***
 // const {workspace, locale} = React.useContext(JahiaCtx);

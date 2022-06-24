@@ -1,15 +1,13 @@
 import React from "react";
-import {JahiaCtx,useNode} from "@jahia/nextjs-lib";
+import {getImageURI, JahiaCtx, useNode} from "@jahia/nextjs-lib";
 // import {gql, useQuery} from "@apollo/client";
 import styles from './item.module.css'
 import classNames from 'classnames';
 import * as PropTypes from "prop-types";
-import {getImageURI} from "../../jahia/utils";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {PlayFill} from "react-bootstrap-icons";
-import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox.css";
 
 // *** Query sample without usage of useNode() ***

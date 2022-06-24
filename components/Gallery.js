@@ -1,8 +1,7 @@
 import React from "react";
-import {JahiaCtx, useNode} from "@jahia/nextjs-lib";
+import {JahiaCtx, useNode, DefaultImage} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
 import {PlusLg} from "react-bootstrap-icons";
-import CmsImage from "./jahia/Image/Default";
 import {linkToProperties} from "./GQL/properties";
 import LinkTo from "./LinkTo";
 
@@ -20,7 +19,7 @@ function Gallery({id}) {
     }
 
     const {name, properties : {heading,mediaNode}} = data;
-    const ImageComponent = CmsImage;
+    const ImageComponent = DefaultImage;
 
     return (
         <LinkTo content={data.properties} locale={locale} className="link-thumbnail" fallback={{elt:'div',className:'link-thumbnail'}}>

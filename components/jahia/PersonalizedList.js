@@ -1,8 +1,7 @@
 import React, {useContext} from 'react';
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx, ContentList} from "@jahia/nextjs-lib";
 import * as PropTypes from "prop-types";
 import {PersonalizedContentLive} from "./PersonalizedContentLive";
-import {ContentList} from "./ContentList";
 
 export function PersonalizedList(props) {
     const {isEditMode} = useContext(JahiaCtx);

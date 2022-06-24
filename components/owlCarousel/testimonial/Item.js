@@ -1,9 +1,8 @@
 import React from "react";
-import {JahiaCtx, useNode} from "@jahia/nextjs-lib";
+import {getImageURI, JahiaCtx, useNode} from "@jahia/nextjs-lib";
 import styles from './item.module.css'
 import classNames from 'classnames';
 import * as PropTypes from "prop-types";
-import {getImageURI} from "../../jahia/utils";
 import "@fancyapps/ui/dist/fancybox.css";
 
 //TODO use xss to clean caption

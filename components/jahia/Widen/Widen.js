@@ -1,11 +1,10 @@
 import React, {useContext} from "react";
-import {JahiaCtx} from "@jahia/nextjs-lib";
+import {JahiaCtx, DefaultImage} from "@jahia/nextjs-lib";
 import {useQuery} from "@apollo/client";
 
 import {queryWidenRef} from "./gqlQuery";
 import * as PropTypes from "prop-types";
 
-import Image from "./components/Image";
 import Video from "./components/Video";
 import Pdf from "./components/Pdf";
 import Document from "./components/Document";
@@ -13,7 +12,7 @@ import Document from "./components/Document";
 
 
 const components = {
-    'wdennt:image': Image,
+    'wdennt:image': DefaultImage,
     'wdennt:video':Video,
     'wdennt:pdf':Pdf,
     'wdennt:document':Document
@@ -45,7 +44,7 @@ function Widen({id}) {
     switch(refNodeTypeName){
         case "wdennt:image":
             return (
-                <Image
+                <DefaultImage
                     id={refNode.uuid}
                     defaultImageSize={widenRef.defaultImageSize?.value}
                     imageSizes={widenRef.imageSizes?.value}
