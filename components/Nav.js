@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 // Import Link from "next/link";
-import Link from './jahia/CmsLink';
-import {JahiaCtx, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {JahiaCtx, JahiaLink, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
 import {gql, useQuery} from '@apollo/client';
 import {contentTypes} from './jahia/common';
 import classnames from 'classnames';
@@ -128,9 +127,9 @@ function Nav({base, path}) {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
 
-                <Link href={navTree.path} locale={locale}>
+                <JahiaLink href={navTree.path} locale={locale}>
                     <a className="navbar-brand ">{navTree.title?.value}</a>
-                </Link>
+                </JahiaLink>
 
                 <button
                     className="navbar-toggler"

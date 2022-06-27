@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import Main from './jahia/Main';
 import Nav from './Nav';
 import {JahiaCtx} from '@jahia/nextjs-lib';
 import classNames from 'classnames';
@@ -26,30 +25,24 @@ function Layout({children, path, templateName}) {
                 {isEditMode
                     && <link type="text/css" href="/gwt/resources/css/jahia-anthracite/edit.css" rel="stylesheet"/>}
             </Head>
-            <Main
-                path={path}
-                templateName={templateName}
-                className="jahia-edit"
-            >
-                <header role="banner">
-                    <Nav base={`/sites/${process.env.NEXT_PUBLIC_JAHIA_SITE}`} path={path}/>
-                </header>
-                <div className={classNames('top-shadow', {[styles.topShadowEdit]: isEditMode})}/>
-                {children}
-                <footer className="site-footer" role="contentinfo">
-                    <Container>
-                        <Row>
-                            <Col className="text-md-center text-left">
-                                <p className="copyright">
-                                    Copyright &copy; {new Date().getFullYear()} All rights reserved | This template is inspired by
-                                    template from <a href="https://colorlib.com" target="_blank" rel="noreferrer">Colorlib</a>
-                                </p>
-                            </Col>
-                        </Row>
-                    </Container>
-                </footer>
-            </Main>
 
+            <header role="banner">
+                <Nav base={`/sites/${process.env.NEXT_PUBLIC_JAHIA_SITE}`} path={path}/>
+            </header>
+            <div className={classNames('top-shadow', {[styles.topShadowEdit]: isEditMode})}/>
+            {children}
+            <footer className="site-footer" role="contentinfo">
+                <Container>
+                    <Row>
+                        <Col className="text-md-center text-left">
+                            <p className="copyright">
+                                Copyright &copy; {new Date().getFullYear()} All rights reserved | This template is inspired by
+                                template from <a href="https://colorlib.com" target="_blank" rel="noreferrer">Colorlib</a>
+                            </p>
+                        </Col>
+                    </Row>
+                </Container>
+            </footer>
         </>
     );
 }

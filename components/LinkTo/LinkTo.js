@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styles from './linkTo.module.css';
 import NextLink from 'next/link';
-import CmsLink from '../jahia/CmsLink';
+import {JahiaLink} from '@jahia/nextjs-lib';
 import classnames from 'classnames';
 
 function Fallback({fallback, children}) {
@@ -46,7 +46,7 @@ export function LinkTo({content, locale, fallback, className, children}) {
     let url = externalLink;
 
     if (internalLink) {
-        Component = CmsLink;
+        Component = JahiaLink;
         url = internalLink.path;
     }
 

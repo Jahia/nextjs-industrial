@@ -1,8 +1,11 @@
 import React from 'react';
-import {componentByMixin, componentsByType, componentRenderingModuleTag, RichText, ImageReferenceLink} from '@jahia/nextjs-lib';
-
-import {PersonalizedContent} from './jahia/PersonalizedContent';
-import {PersonalizedList} from './jahia/PersonalizedList';
+import {
+    componentByMixin,
+    componentRenderingModuleTag,
+    componentsByType,
+    ImageReferenceLink,
+    RichText
+} from '@jahia/nextjs-lib';
 import BS4Grid from './jahia/BS4/Grid';
 import NavMenuText from './jahia/NavMenuText';
 
@@ -26,7 +29,6 @@ export const registerComponents = () => {
         'bootstrap4nt:grid': BS4Grid,
         'jnt:navMenuText': NavMenuText,
         // 'jnt:bigText': RichText,
-        'wemnt:personalizedContent': PersonalizedContent,
 
         // Community Module
         'wdennt:widenReference': Widen,
@@ -45,7 +47,6 @@ export const registerComponents = () => {
     });
 
     Object.assign(componentByMixin, {
-        'wemmix:personalizedList': PersonalizedList,
     });
 
     componentRenderingModuleTag.push(...[
