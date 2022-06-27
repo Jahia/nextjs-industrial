@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-// Import Link from "next/link";
-import {JahiaCtx, JahiaLink, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {JahiaCtx, JahiaLink as Link, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
 import {gql, useQuery} from '@apollo/client';
 import {contentTypes} from './jahia/common';
 import classnames from 'classnames';
@@ -8,6 +7,7 @@ import * as PropTypes from 'prop-types';
 
 function Nav({base, path}) {
     const {workspace, locale} = React.useContext(JahiaCtx);
+    // Note : update the code with react handler onMouseEnter & onMouseLeave
     useEffect(() => {
         if (process.browser) {
             window.jQuery('nav .dropdown').hover(function () {
@@ -127,9 +127,9 @@ function Nav({base, path}) {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
 
-                <JahiaLink href={navTree.path} locale={locale}>
+                <Link href={navTree.path} locale={locale}>
                     <a className="navbar-brand ">{navTree.title?.value}</a>
-                </JahiaLink>
+                </Link>
 
                 <button
                     className="navbar-toggler"

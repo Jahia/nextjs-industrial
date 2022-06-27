@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 
 // Import {HeartFill} from 'react-bootstrap-icons';
 // meta
-function Layout({children, path, templateName}) {
+function Layout({children, path}) {
     const {isEditMode} = React.useContext(JahiaCtx);
 
     // With <HeartFill className="text-danger"/> by <a href="https://colorlib.com" target="_blank" rel="noreferrer">Colorlib</a>
@@ -50,7 +50,6 @@ function Layout({children, path, templateName}) {
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
     path: PropTypes.string.isRequired,
-    templateName: PropTypes.string.isRequired,
     // Meta: PropTypes.object,
 };
 

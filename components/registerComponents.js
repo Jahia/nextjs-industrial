@@ -25,13 +25,10 @@ function ImageReferenceLinkWrapper(props) {
 
 export const registerComponents = () => {
     Object.assign(componentsByType, {
-        // Core
-        'bootstrap4nt:grid': BS4Grid,
-        'jnt:navMenuText': NavMenuText,
-        // 'jnt:bigText': RichText,
-
         // Community Module
         'wdennt:widenReference': Widen,
+        'bootstrap4nt:grid': BS4Grid,
+        'jnt:navMenuText': NavMenuText,
 
         // Content Model Module
         'tint:text': RichText,
