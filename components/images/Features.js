@@ -1,17 +1,17 @@
-import React from "react";
-import {JahiaCtx,DefaultImage, getImageURI} from "@jahia/nextjs-lib";
-import * as PropTypes from "prop-types";
+import React from 'react';
+import {JahiaCtx, DefaultImage, getImageURI} from '@jahia/nextjs-lib';
+import * as PropTypes from 'prop-types';
 
-function FeatureImage({path,alt,className}) {
-    const {workspace,isEditMode} = React.useContext(JahiaCtx);
-    const imageUri = getImageURI({uri: path, workspace})
-    // console.log("[FeatureImage] imageUri: ",imageUri);
+function FeatureImage({path, alt, className}) {
+    const {workspace, isEditMode} = React.useContext(JahiaCtx);
+    const imageUri = getImageURI({uri: path, workspace});
+    // Console.log("[FeatureImage] imageUri: ",imageUri);
 
-    if(isEditMode) {
-        return <DefaultImage path={path} alt={alt} className={className}/>
+    if (isEditMode) {
+        return <DefaultImage path={path} alt={alt} className={className}/>;
     }
 
-    return(
+    return (
         <div className="scaling-image h-100">
             <div className="frame h-100">
                 <div
@@ -19,17 +19,17 @@ function FeatureImage({path,alt,className}) {
                     style={{backgroundImage: `url('${imageUri}')`}}/>
             </div>
         </div>
-    )
+    );
 }
 
 FeatureImage.propTypes = {
     path: PropTypes.string,
     alt: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
 };
 
 FeatureImage.defaultProps = {
-    alt:"this is the feature image"
-}
+    alt: 'this is the feature image',
+};
 
 export default FeatureImage;

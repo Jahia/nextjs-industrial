@@ -1,2 +1,2 @@
-export * from "./LinkTo"
-export * from "./properties"
+export * from './LinkTo';
+export * from './properties';

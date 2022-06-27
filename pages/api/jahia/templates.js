@@ -1,25 +1,23 @@
-import {templates} from "@jahia/nextjs-lib";
-const excludedName = ["default"];
+import {templates} from '@jahia/nextjs-lib';
+const excludedName = ['default'];
 
 export default function handler(req, res) {
-    if (req.query.secret !== process.env.NEXT_PREVIEW_SECRET){
-        return res.status(401).json({ message: 'Invalid token' })
+    if (req.query.secret !== process.env.NEXT_PREVIEW_SECRET) {
+        return res.status(401).json({message: 'Invalid token'});
     }
 
     let templateNames = [];
-    try{
+    try {
         templateNames = Object
             .keys(templates)
             .filter(templateName => !excludedName.includes(templateName))
-            .map(templateName => {
-                return {
-                    name:templateName,
-                    displayName: templateName.charAt(0).toUpperCase() + templateName.slice(1)
-                }
-            });
-    }catch(e){
-        console.warn("[API Templates] error reading template names; error: ",e)
+            .map(templateName => ({
+                name: templateName,
+                displayName: templateName.charAt(0).toUpperCase() + templateName.slice(1),
+            }));
+    } catch (e) {
+        console.warn('[API Templates] error reading template names; error: ', e);
     }
 
-    return res.status(200).json(templateNames)
+    return res.status(200).json(templateNames);
 }

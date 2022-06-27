@@ -1,13 +1,13 @@
 import React from 'react';
-import classNames from "classnames";
-import {JahiaCtx, JahiaModuleTag, RichText, useNode} from "@jahia/nextjs-lib";
+import classNames from 'classnames';
+import {JahiaCtx, JahiaModuleTag, RichText, useNode} from '@jahia/nextjs-lib';
 
-import styles from './halfBlock.module.css'
-import Image from "./images/HalfBlock";
-import cms from "../jahia";
-import * as PropTypes from "prop-types";
+import styles from './halfBlock.module.css';
+import Image from './images/HalfBlock';
+import cms from '../jahia';
+import * as PropTypes from 'prop-types';
 
-function ChildComponent({isNodeEmpty,path,nodetypes,classname,children}) {
+function ChildComponent({isNodeEmpty, path, nodetypes, classname, children}) {
     const {isEditMode} = React.useContext(JahiaCtx);
     if (isEditMode) {
         if (isNodeEmpty) {
@@ -15,15 +15,17 @@ function ChildComponent({isNodeEmpty,path,nodetypes,classname,children}) {
                 <div className={styles[classname]}>
                     <JahiaModuleTag path={path} type="placeholder" nodetypes={nodetypes}/>
                 </div>
-            )
+            );
         }
+
         return (
             <JahiaModuleTag path={path} nodetypes={nodetypes}>
                 {children}
             </JahiaModuleTag>
-        )
+        );
     }
-    return children
+
+    return children;
 }
 
 ChildComponent.propTypes = {
@@ -33,7 +35,6 @@ ChildComponent.propTypes = {
     classname: PropTypes.string,
     children: PropTypes.node,
 };
-
 
 // *** Query sample without usage of useNode() ***
 // const {workspace,locale,isEditMode} = React.useContext(JahiaCtx);
@@ -69,14 +70,15 @@ ChildComponent.propTypes = {
 function HalfBlock({id}) {
     const {isEditMode} = React.useContext(JahiaCtx);
 
-    const {data, error, loading} = useNode(id,["imagePosition","mediaNode"],true)
+    const {data, error, loading} = useNode(id, ['imagePosition', 'mediaNode'], true);
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
 
     const getChildNodeOfType = ({node, nodeType}) => {
@@ -85,34 +87,34 @@ function HalfBlock({id}) {
         }
 
         const childArray = node.children.filter(node =>
-            node.primaryNodeType.name === nodeType
+            node.primaryNodeType.name === nodeType,
         );
         return childArray[0];
-    }
+    };
 
-    const { properties: {imagePosition} } = data;
+    const {properties: {imagePosition}} = data;
 
     const imageNode = getChildNodeOfType({
         node: data,
-        nodeType: cms.contentTypes.HALFBLOCK_IMAGE
+        nodeType: cms.contentTypes.HALFBLOCK_IMAGE,
     });
 
     const bodyNode = getChildNodeOfType({
         node: data,
-        nodeType: cms.contentTypes.INDUS_TEXT
+        nodeType: cms.contentTypes.INDUS_TEXT,
     });
 
     return (
         <section>
             <div className="half d-lg-flex d-block">
-                <div className={classNames("image", {
-                    "order-2": imagePosition === "right",
-                    [styles.editImageWrapper]: isEditMode
+                <div className={classNames('image', {
+                    'order-2': imagePosition === 'right',
+                    [styles.editImageWrapper]: isEditMode,
                 })}
                 >
                     <ChildComponent
                         isNodeEmpty={!imageNode}
-                        path={imageNode?.path || "image"}
+                        path={imageNode?.path || 'image'}
                         nodetypes={[imageNode?.primaryNodeType.name || cms.contentTypes.HALFBLOCK_IMAGE]}
                         classname="editImageContainer"
                     >
@@ -123,7 +125,7 @@ function HalfBlock({id}) {
                 <div className="text text-center">
                     <ChildComponent
                         isNodeEmpty={!bodyNode}
-                        path={bodyNode?.path || "body"}
+                        path={bodyNode?.path || 'body'}
                         nodetypes={[bodyNode?.primaryNodeType.name || cms.contentTypes.INDUS_TEXT]}
                     >
                         <RichText id={bodyNode?.uuid}/>
@@ -131,11 +133,11 @@ function HalfBlock({id}) {
                 </div>
             </div>
         </section>
-    )
+    );
 }
 
 HalfBlock.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
 };
 
 export default HalfBlock;

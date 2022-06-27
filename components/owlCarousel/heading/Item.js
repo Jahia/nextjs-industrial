@@ -1,15 +1,16 @@
-import React from "react";
-import {getImageURI, JahiaCtx, useNode} from "@jahia/nextjs-lib";
-// import {gql, useQuery} from "@apollo/client";
-import styles from './item.module.css'
+import React from 'react';
+import {getImageURI, JahiaCtx, useNode} from '@jahia/nextjs-lib';
+// Import {gql, useQuery} from "@apollo/client";
+import styles from './item.module.css';
 import classNames from 'classnames';
-import * as PropTypes from "prop-types";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import {PlayFill} from "react-bootstrap-icons";
-import { Fancybox } from "@fancyapps/ui";
-import "@fancyapps/ui/dist/fancybox.css";
+import * as PropTypes from 'prop-types';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import {PlayFill} from 'react-bootstrap-icons';
+// eslint-disable-next-line no-unused-vars
+import {Fancybox} from '@fancyapps/ui';
+import '@fancyapps/ui/dist/fancybox.css';
 
 // *** Query sample without usage of useNode() ***
 // const {workspace, isEditMode, locale} = React.useContext(JahiaCtx);
@@ -45,36 +46,37 @@ import "@fancyapps/ui/dist/fancybox.css";
 // });
 // const content = data?.jcr?.nodeById;
 
-//TODO use xss to clean caption
+// Note : use xss to clean caption
 
 function Item({id}) {
     const {workspace, isEditMode} = React.useContext(JahiaCtx);
 
-    const {data, error, loading} = useNode(id,["caption","videoExtPath","videoIntPath","mediaNode"])
+    const {data, error, loading} = useNode(id, ['caption', 'videoExtPath', 'videoIntPath', 'mediaNode']);
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
 
-    const {caption,videoExtPath,videoIntPath,mediaNode} = data.properties;
+    const {caption, videoExtPath, videoIntPath, mediaNode} = data.properties;
 
     const imageURI = getImageURI({uri: mediaNode?.path, workspace});
-    const videoLink = videoIntPath ?
-        getImageURI({uri: videoIntPath.path, workspace}) :
-        videoExtPath;
+    const videoLink = videoIntPath
+        ? getImageURI({uri: videoIntPath.path, workspace})
+        : videoExtPath;
 
     return (
         <>
-            {isEditMode &&
-                <div className={classNames(
-                    "card",
-                    styles.jOwlCarouselEditCardEdit
+            {isEditMode
+                && <div className={classNames(
+                    'card',
+                    styles.jOwlCarouselEditCardEdit,
                 )}
-                >
+                   >
                     <img
                         src={imageURI}
                         className="card-img-top"
@@ -82,12 +84,13 @@ function Item({id}) {
                     />
                     {/* eslint-disable-next-line react/no-danger */}
                     <div dangerouslySetInnerHTML={{__html: caption}} className={styles.cardBody}/>
+                    {/* eslint-disable-next-line  react/jsx-closing-tag-location */}
                 </div>}
-            {!isEditMode &&
-                <div
+            {!isEditMode
+                && <div
                     className="slider-item"
                     style={{backgroundImage: `url('${imageURI}')`}}
-                >
+                   >
                     <Container>
                         <Row className="slider-text align-items-center justify-content-center">
                             <Col
@@ -95,35 +98,36 @@ function Item({id}) {
                                 lg={7}
                                 className="text-center"
                             >
-                                {videoLink &&
-                                <div className="btn-play-wrap mx-auto">
-                                    <p className="mb-4">
+                                {videoLink
+                                    && <div className="btn-play-wrap mx-auto">
+                                        <p className="mb-4">
+                                            <a
+                                                data-fancybox
+                                                href={videoLink}
+                                                data-ratio="2"
+                                                className="btn-play"
+                                            >
+                                                <PlayFill/>
+                                            </a>
 
-                                        <a
-                                            data-fancybox
-                                            href={videoLink}
-                                            data-ratio="2"
-                                            className="btn-play"
-                                        >
-                                            <PlayFill/>
-                                        </a>
-
-                                    </p>
-                                </div>}
+                                        </p>
+                                        {/* eslint-disable-next-line  react/jsx-closing-tag-location */}
+                                    </div>}
 
                                 {/* eslint-disable-next-line react/no-danger */}
-                                <div dangerouslySetInnerHTML={{__html: caption || "no caption"}}/>
+                                <div dangerouslySetInnerHTML={{__html: caption || 'no caption'}}/>
                             </Col>
                         </Row>
                     </Container>
+                    {/* eslint-disable-next-line  react/jsx-closing-tag-location */}
                 </div>}
         </>
 
-    )
+    );
 }
 
 Item.propTypes = {
-    id : PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 };
 
 export default Item;

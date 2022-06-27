@@ -1,29 +1,30 @@
-import React from "react";
-import {useNode} from "@jahia/nextjs-lib";
-import * as PropTypes from "prop-types";
-import * as Icons from "react-bootstrap-icons";
+import React from 'react';
+import {useNode} from '@jahia/nextjs-lib';
+import * as PropTypes from 'prop-types';
+import * as Icons from 'react-bootstrap-icons';
 
 function FeatureContentBloc({id}) {
-
-    const {data, error, loading} = useNode(id,["title","teaser","iconName"]);
+    const {data, error, loading} = useNode(id, ['title', 'teaser', 'iconName']);
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
 
-    const {title,teaser,iconName} = data.properties;
+    const {title, teaser, iconName} = data.properties;
 
     const getIcon = () => {
-        if(iconName){
-            const { [iconName]: Icon } = Icons;
-            if(Icon)
-                return <Icon className="display-4 text-primary"/>
+        if (iconName) {
+            const {[iconName]: Icon} = Icons;
+            if (Icon) {
+                return <Icon className="display-4 text-primary"/>;
+            }
         }
-    }
+    };
 
     return (
         <div className="feature-1 d-md-flex">
@@ -33,10 +34,10 @@ function FeatureContentBloc({id}) {
                 <p>{teaser}</p>
             </div>
         </div>
-    )
+    );
 }
 
 FeatureContentBloc.propTypes = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 };
 export default FeatureContentBloc;

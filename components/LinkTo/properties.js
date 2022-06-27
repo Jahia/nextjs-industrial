@@ -1,1 +1,1 @@
-export const linkToProperties = ["linkType","linkTarget","externalLink","internalLink"];
+export const linkToProperties = ['linkType', 'linkTarget', 'externalLink', 'internalLink'];

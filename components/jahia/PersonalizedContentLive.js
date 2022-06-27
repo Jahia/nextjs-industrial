@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {CxsCtx, JahiaComponent, JahiaCtx} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
-import * as PropTypes from "prop-types";
+import {CxsCtx, JahiaComponent, JahiaCtx} from '@jahia/nextjs-lib';
+import {gql, useQuery} from '@apollo/client';
+import * as PropTypes from 'prop-types';
 
 export function PersonalizedContentLive({id, isFirstOnly}) {
     const {locale} = useContext(JahiaCtx);
@@ -32,29 +32,30 @@ export function PersonalizedContentLive({id, isFirstOnly}) {
                 }
             }
         }
-    }`
+    }`;
 
     const {data, loading, error} = useQuery(getPersonalizedContent, {
         variables: {
             id,
             profileId: cxs?.profileId,
             sessionId: cxs?.sessionId,
-            language: locale
+            language: locale,
         },
         skip: !cxs,
     });
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
 
     const nodes = data?.jcr?.nodeById.jExperience.personalizedVariants;
 
-    return !!nodes && nodes.length > 0 && (
+    return Boolean(nodes) && nodes.length > 0 && (
         isFirstOnly ? (
             <JahiaComponent node={nodes[0]}/>
         ) : (
@@ -65,6 +66,6 @@ export function PersonalizedContentLive({id, isFirstOnly}) {
 
 PersonalizedContentLive.propTypes = {
     id: PropTypes.string.isRequired,
-    isFirstOnly: PropTypes.bool
-}
+    isFirstOnly: PropTypes.bool,
+};
 

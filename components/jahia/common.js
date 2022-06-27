@@ -5,6 +5,6 @@ export const contentTypes = {
     MENU_ITEM: 'jmix:navMenuItem',
     BS4_GRID: 'bootstrap4nt:grid',
     PROPS: {
-        TITLE: 'jcr:title'
-    }
-}
+        TITLE: 'jcr:title',
+    },
+};

@@ -1,8 +1,8 @@
-import React from "react";
-import {JahiaCtx, useNode, getImageURI} from "@jahia/nextjs-lib";
-import * as PropTypes from "prop-types";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import React from 'react';
+import {JahiaCtx, useNode, getImageURI} from '@jahia/nextjs-lib';
+import * as PropTypes from 'prop-types';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 // *** Query sample without usage of useNode() ***
@@ -34,22 +34,22 @@ import Col from 'react-bootstrap/Col';
 // const content = data?.jcr?.nodeById;
 // const uri = getImageURI({uri: content.media?.node?.path, workspace});
 
-//TODO use xss to clean body
+// Note: use xss to clean body
 function Hero({id}) {
-
     const {workspace} = React.useContext(JahiaCtx);
 
-    const {data, error, loading} = useNode(id,["body","mediaNode"])
+    const {data, error, loading} = useNode(id, ['body', 'mediaNode']);
 
     if (loading) {
-        return "loading";
-    }
-    if (error) {
-        console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return 'loading';
     }
 
-    const {body,mediaNode} = data.properties;
+    if (error) {
+        console.log(error);
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
+    }
+
+    const {body, mediaNode} = data.properties;
     const uri = getImageURI({uri: mediaNode?.path, workspace});
 
     return (
@@ -70,10 +70,10 @@ function Hero({id}) {
                 </Container>
             </div>
         </div>
-    )
+    );
 }
 
 Hero.propTypes = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 };
 export default Hero;

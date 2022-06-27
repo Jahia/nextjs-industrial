@@ -1,33 +1,33 @@
-import React from "react";
+import React from 'react';
 import classNames from 'classnames';
-import styles from './edit.module.css'
-import Items from "./Items";
-import * as PropTypes from "prop-types";
-import {JahiaModuleTag} from "@jahia/nextjs-lib";
-import cms from "../../../jahia";
+import styles from './edit.module.css';
+import Items from './Items';
+import * as PropTypes from 'prop-types';
+import {JahiaModuleTag} from '@jahia/nextjs-lib';
+import cms from '../../../jahia';
 
 function OwlCarousel({carousel}) {
-    const {uuid,path,children,properties:{class: owlClassName}} = carousel;
-    //Note: JahiaModuleTag is required here to pass the childNodeTypes and enable the "create" btn to add children carousel item
+    const {uuid, path, children, properties: {class: owlClassName}} = carousel;
+    // Note: JahiaModuleTag is required here to pass the childNodeTypes and enable the "create" btn to add children carousel item
     return (
         <JahiaModuleTag path={path} nodetypes={[cms.contentTypes.INDUS_CAROUSEL_HEADING_ITEM]}>
             <section
                 id={uuid}
                 className={classNames(
                     owlClassName,
-                    styles.jOwlCarouselEdit
+                    styles.jOwlCarouselEdit,
                 )}
             >
                 <Items nodes={children}/>
             </section>
-            {/*Jahia btn placeholder to add a new item*/}
+            {/* Jahia btn placeholder to add a new item */}
             <JahiaModuleTag path="*" type="placeholder"/>
         </JahiaModuleTag>
-    )
+    );
 }
 
 OwlCarousel.propTypes = {
-    carousel : PropTypes.object.isRequired,
+    carousel: PropTypes.object.isRequired,
 };
 
 export default OwlCarousel;

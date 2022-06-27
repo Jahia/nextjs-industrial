@@ -1,22 +1,20 @@
-import React, {useContext} from "react";
-import {JahiaCtx, DefaultImage} from "@jahia/nextjs-lib";
-import {useQuery} from "@apollo/client";
+import React, {useContext} from 'react';
+import {JahiaCtx, DefaultImage} from '@jahia/nextjs-lib';
+import {useQuery} from '@apollo/client';
 
-import {queryWidenRef} from "./gqlQuery";
-import * as PropTypes from "prop-types";
+import {queryWidenRef} from './gqlQuery';
+import * as PropTypes from 'prop-types';
 
-import Video from "./components/Video";
-import Pdf from "./components/Pdf";
-import Document from "./components/Document";
-
-
+import Video from './components/Video';
+import Pdf from './components/Pdf';
+import Document from './components/Document';
 
 const components = {
     'wdennt:image': DefaultImage,
-    'wdennt:video':Video,
-    'wdennt:pdf':Pdf,
-    'wdennt:document':Document
-}
+    'wdennt:video': Video,
+    'wdennt:pdf': Pdf,
+    'wdennt:document': Document,
+};
 
 function Widen({id}) {
     const {workspace} = useContext(JahiaCtx);
@@ -24,25 +22,26 @@ function Widen({id}) {
     const {data, error, loading} = useQuery(queryWidenRef, {
         variables: {
             workspace,
-            id
-        }
+            id,
+        },
     });
 
     const widenRef = data?.jcr?.nodeById;
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
-    // console.log("[Widen] widenRef : ",widenRef);
+    // Console.log("[Widen] widenRef : ",widenRef);
 
     const refNode = widenRef.node?.refNode;
     const refNodeTypeName = refNode?.primaryNodeType?.name;
-    switch(refNodeTypeName){
-        case "wdennt:image":
+    switch (refNodeTypeName) {
+        case 'wdennt:image':
             return (
                 <DefaultImage
                     id={refNode.uuid}
@@ -54,17 +53,17 @@ function Widen({id}) {
         default:
             if (refNodeTypeName && components[refNodeTypeName]) {
                 const Component = components[refNodeTypeName];
-                return <Component id={node.uuid} referenceView={widenRef.referenceView?.value}/>;
+                return <Component id={refNode.uuid} referenceView={widenRef.referenceView?.value}/>;
             }
     }
 
-    console.log('Component not found: ', refNodeTypeName)
-    // eslint-disable-next-line react/react-in-jsx-scope
-    return <span>Component not found : {refNodeTypeName}</span>
+    console.log('Component not found: ', refNodeTypeName);
+
+    return <span>Component not found : {refNodeTypeName}</span>;
 }
 
 Widen.propTypes = {
-    id : PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
 };
 
 export default Widen;

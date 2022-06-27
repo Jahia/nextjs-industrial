@@ -1,9 +1,7 @@
-import React, {useContext} from "react";
-import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
-import * as PropTypes from "prop-types";
-
-//TODO use xss to clean content
+import React, {useContext} from 'react';
+import {JahiaCtx, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {gql, useQuery} from '@apollo/client';
+import * as PropTypes from 'prop-types';
 
 function NavMenuText({id}) {
     const {workspace, locale} = useContext(JahiaCtx);
@@ -23,25 +21,24 @@ function NavMenuText({id}) {
         variables: {
             workspace,
             id,
-            language: locale
-        }
+            language: locale,
+        },
     });
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
 
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
 
-    return <h3>{data?.jcr?.nodeById?.displayName}</h3>
-
+    return <h3>{data?.jcr?.nodeById?.displayName}</h3>;
 }
 
 NavMenuText.propTypes = {
-    id : PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 };
 
-export default NavMenuText
+export default NavMenuText;

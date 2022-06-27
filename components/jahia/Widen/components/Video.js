@@ -1,10 +1,10 @@
-import React, {useContext} from "react";
-import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
-import * as PropTypes from "prop-types";
+import React, {useContext} from 'react';
+import {JahiaCtx, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {gql, useQuery} from '@apollo/client';
+import * as PropTypes from 'prop-types';
 
-
-function Image({id,defaultImageSize,imageSizes,referenceView}) {
+// ReferenceView
+function Image({id, defaultImageSize, imageSizes}) {
     const {workspace} = useContext(JahiaCtx);
 
     const queryWidenImage = gql`query (
@@ -26,45 +26,45 @@ function Image({id,defaultImageSize,imageSizes,referenceView}) {
     const {data, error, loading} = useQuery(queryWidenImage, {
         variables: {
             workspace,
-            id
-        }
+            id,
+        },
     });
 
     const imageNode = data?.jcr?.nodeById;
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
-    console.log("[Image] widenRef : ",widenRef);
 
-    const url = imageNode.templatedUrl?.value.replace("{scale}",1).replace("{quality}",72);
+    const url = imageNode.templatedUrl?.value.replace('{scale}', 1).replace('{quality}', 72);
 
-    return(
+    return (
         <img
             src={url.replace('{size}', defaultImageSize)}
             width="100%"
-            srcSet={imageSizes.map(width => (`${url.replace('{size}', width)} ${width}w`) ).toString()}
-            // sizes="${sizes}"
+            srcSet={imageSizes.map(width => (`${url.replace('{size}', width)} ${width}w`)).toString()}
+            // Sizes="${sizes}"
             // className="${class}"
             alt={imageNode.name}
         />
-    )
+    );
 }
 
 Image.propTypes = {
-    id : PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     defaultImageSize: PropTypes.number,
     imageSizes: PropTypes.array,
-    referenceView:PropTypes.string
+    // ReferenceView: PropTypes.string,
 };
 
 Image.defaultProps = {
-    defaultImageSize:500,
-    imageSizes:[256,512,768,1280]
-}
+    defaultImageSize: 500,
+    imageSizes: [256, 512, 768, 1280],
+};
 
 export default Image;

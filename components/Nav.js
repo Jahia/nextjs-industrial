@@ -1,29 +1,29 @@
-import React, {useEffect} from "react";
-// import Link from "next/link";
-import Link from "./jahia/CmsLink";
-import {JahiaCtx,CORE_NODE_FIELDS} from "@jahia/nextjs-lib";
-import {gql, useQuery} from "@apollo/client";
-import {contentTypes} from "./jahia/common";
-import classnames from "classnames";
-import * as PropTypes from "prop-types";
+import React, {useEffect} from 'react';
+// Import Link from "next/link";
+import Link from './jahia/CmsLink';
+import {JahiaCtx, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {gql, useQuery} from '@apollo/client';
+import {contentTypes} from './jahia/common';
+import classnames from 'classnames';
+import * as PropTypes from 'prop-types';
 
 function Nav({base, path}) {
     const {workspace, locale} = React.useContext(JahiaCtx);
     useEffect(() => {
         if (process.browser) {
-            $('nav .dropdown').hover(function(){
-                var $this = $(this);
+            window.jQuery('nav .dropdown').hover(function () {
+                const $this = window.jQuery(this);
                 $this.addClass('show');
                 $this.find('> a').attr('aria-expanded', true);
                 $this.find('.dropdown-menu').addClass('show');
-            }, function(){
-                var $this = $(this);
+            }, function () {
+                const $this = window.jQuery(this);
                 $this.removeClass('show');
                 $this.find('> a').attr('aria-expanded', false);
                 $this.find('.dropdown-menu').removeClass('show');
             });
         }
-    },[]);
+    }, []);
 
     const getSitePages = gql`query(
         $workspace: Workspace!,
@@ -69,63 +69,61 @@ function Nav({base, path}) {
         title: property(name: $title, language: $language) { value }
     }
     ${CORE_NODE_FIELDS}`;
-    // console.log(`[Nav] base : ${base}, workspace: ${workspace}, locale: ${locale}, title: ${contentTypes.PROPS.TITLE}, MenuItem: ${contentTypes.MENU_ITEM}`);
+    // Console.log(`[Nav] base : ${base}, workspace: ${workspace}, locale: ${locale}, title: ${contentTypes.PROPS.TITLE}, MenuItem: ${contentTypes.MENU_ITEM}`);
 
-    const {data, error, loading} =useQuery(getSitePages, {
+    const {data, error, loading} = useQuery(getSitePages, {
         variables: {
             base,
             workspace,
             language: locale,
             title: contentTypes.PROPS.TITLE,
             MenuItem: contentTypes.MENU_ITEM,
-            isLevel3:true
-        }
+            isLevel3: true,
+        },
     });
-    // console.log("[nav] nodes: ",data?.jcr?.nodeByPath?.children?.nodes);
+    // Console.log("[nav] nodes: ",data?.jcr?.nodeByPath?.children?.nodes);
     // console.log("[nav] loading: ",loading);
 
-    const navTree = data?.jcr?.nodeByPath?.children?.nodes?.filter(page => page.isHomePage?.value === "true")[0];
+    const navTree = data?.jcr?.nodeByPath?.children?.nodes?.filter(page => page.isHomePage?.value === 'true')[0];
 
     if (loading) {
-        return "loading";
+        return 'loading';
     }
+
     if (error) {
         console.log(`[nav] locale: ${locale}`);
         console.log(error);
-        return <div>Error when loading ${JSON.stringify(error)}</div>
+        return <div>Error when loading ${JSON.stringify(error)}</div>;
     }
 
-    const hasChildren = (node) => {
-        return Array.isArray(node.children?.nodes) && node.children.nodes.length > 0
-    }
+    const hasChildren = node => Array.isArray(node.children?.nodes) && node.children.nodes.length > 0;
 
-    const buildAnchorProps = (node) => {
+    const buildAnchorProps = node => {
         const aProps = {
-            className: classnames("nav-link", {
+            className: classnames('nav-link', {
                 active: node.path === path,
-                'dropdown-toggle': hasChildren(node)
-            })
-        }
+                'dropdown-toggle': hasChildren(node),
+            }),
+        };
 
         if (hasChildren(node)) {
             aProps.id = node.uuid;
-            aProps['data-toggle'] = "dropdown";
-            aProps['aria-haspopup'] = "true";
-            aProps['aria-expanded'] = "false";
+            aProps['data-toggle'] = 'dropdown';
+            aProps['aria-haspopup'] = 'true';
+            aProps['aria-expanded'] = 'false';
         }
 
-        return aProps
+        return aProps;
+    };
+
+    if (!navTree) {
+        console.error('Error no HomePage found (check publication status or isHomePage property)');
+        return (<div>Error no HomePage found (check publication status or isHomePage property)</div>);
     }
 
-    if(!navTree){
-        console.error("Error no HomePage found (check publication status or isHomePage property)");
-        return(<div>Error no HomePage found (check publication status or isHomePage property)</div>)
-    }
-
-
-    // console.log("[nav] navTree: ",navTree);
+    // Console.log("[nav] navTree: ",navTree);
     // console.log("[nav] navTree.path: ",navTree.path);
-    const slug=navTree.path;
+    // const slug = navTree.path;
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -149,63 +147,63 @@ function Nav({base, path}) {
                 <div className="collapse navbar-collapse" id="navbarsExample05">
                     <ul className="navbar-nav pl-md-5 ml-auto">
                         {
-                            navTree.children?.nodes?.map(node => {
-                                //console.log("node.path : ",node.path);
-                                return (
-                                    <li
+                            navTree.children?.nodes?.map(node =>
+                                // Console.log("node.path : ",node.path);
+                                 (
+                                     <li
                                         key={node.uuid}
-                                        className={classnames("nav-item", {
-                                            dropdown: hasChildren(node)
+                                        className={classnames('nav-item', {
+                                            dropdown: hasChildren(node),
                                         })}
-                                    >
-                                        <Link href={node.path} locale={locale}>
-                                            {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                                            <a {...buildAnchorProps(node)}>
-                                                {node.title?.value}
-                                            </a>
-                                        </Link>
-                                        {
-                                            hasChildren(node) &&
-                                            (
+                                     >
+                                         <Link href={node.path} locale={locale}>
+                                             {/* eslint-disable-next-line react/jsx-no-target-blank */}
+                                             <a {...buildAnchorProps(node)}>
+                                                 {node.title?.value}
+                                             </a>
+                                         </Link>
+                                         {
+                                            hasChildren(node)
+                                            && (
                                                 <div className="dropdown-menu" aria-labelledby={node.uuid}>
-                                                    {node.children.nodes.map(node2 => {
-                                                            //console.log("node2.path : ",node2.path);
-                                                            return (
-                                                                <Link key={node2.uuid} href={node2.path} locale={locale}>
-                                                                    <a className="dropdown-item">
-                                                                        {node2.title?.value}
-                                                                    </a>
-                                                                </Link>
-                                                            )
-                                                        }
+                                                    {node.children.nodes.map(node2 =>
+                                                            // Console.log("node2.path : ",node2.path);
+                                                             (
+                                                                 <Link key={node2.uuid} href={node2.path} locale={locale}>
+                                                                     <a className="dropdown-item">
+                                                                         {node2.title?.value}
+                                                                     </a>
+                                                                 </Link>
+                                                            ),
+
                                                     )}
                                                 </div>
                                             )
                                         }
-                                    </li>
-                                )
+                                     </li>
+                                ),
 
-                            })
+                            )
                         }
                     </ul>
 
                     <div className="navbar-nav ml-auto">
-                        <span style={{minWidth: "276px"}}>&nbsp;</span>
-                        {/*<form method="post" className="search-form">*/}
-                        {/*    <span className="icon ion ion-search"></span>*/}
-                        {/*    <input type="text" className="form-control" placeholder="Search..."/>*/}
-                        {/*</form>*/}
+                        <span style={{minWidth: '276px'}}>&nbsp;</span>
+                        {/* <form method="post" className="search-form"> */}
+                        {/*    <span className="icon ion ion-search"></span> */}
+                        {/*    <input type="text" className="form-control" placeholder="Search..."/> */}
+                        {/* </form> */}
                     </div>
 
                 </div>
             </div>
         </nav>
-    )
+    );
 }
 
 Nav.propTypes = {
     path: PropTypes.string.isRequired,
-    base: PropTypes.string.isRequired
+    base: PropTypes.string.isRequired,
 };
 
-export default Nav
+export default Nav;
