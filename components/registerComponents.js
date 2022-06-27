@@ -4,7 +4,7 @@ import {
     componentRenderingModuleTag,
     componentsByType,
     ImageReferenceLink,
-    RichText
+    RichText,
 } from '@jahia/nextjs-lib';
 import BS4Grid from './jahia/BS4/Grid';
 import NavMenuText from './jahia/NavMenuText';
