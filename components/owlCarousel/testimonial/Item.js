@@ -37,6 +37,7 @@ function Item({id}) {
                     />
                     {/* eslint-disable-next-line react/no-danger */}
                     <div dangerouslySetInnerHTML={{__html: heading}} className={styles.cardBody}/>
+                    {/* eslint-disable-next-line react/jsx-indent */}
                    </div>}
             {!isEditMode
                 && <div className="item">
@@ -53,6 +54,7 @@ function Item({id}) {
                             <div dangerouslySetInnerHTML={{__html: testimonial}}/>
                         </div>
                     </div>
+                    {/* eslint-disable-next-line  react/jsx-closing-tag-location */}
                 </div>}
         </>
 
