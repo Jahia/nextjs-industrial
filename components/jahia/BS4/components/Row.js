@@ -5,6 +5,17 @@ import Col from 'react-bootstrap/Col';
 import {types} from '../types';
 import {JahiaComponent} from '@jahia/nextjs-lib';
 
+//Note : revoir la creation de la grid
+//col-lg-4 order-lg-2,col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1,col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3
+
+function gridFromClassName ({gridClasses}) {
+    console.log("gridFromClassName : ",gridClasses);
+    if(!gridClasses?.value)
+        return
+
+
+}
+
 function BS4Row({grid, mixins, children}) {
     const renderComponent = node => (
         <JahiaComponent
@@ -35,20 +46,24 @@ function BS4Row({grid, mixins, children}) {
     }
 
     if (grid.rowCssClass?.value) {
-        rowProps.className = `${grid.rowCssClass?.value} ${grid.rowVerticalAlignment?.value} ${grid.rowHorizontalAlignment?.value}`;
+        rowProps.className = `${grid.rowCssClass?.value} ${grid.rowVerticalAlignment?.value || ""} ${grid.rowHorizontalAlignment?.value || ""}`;
     }
 
     // Console.log("[BS4Row] mixins : ",mixins);
     // console.log("[BS4Row] children : ",children);
     // console.log("[BS4Row] rowProps : ",rowProps);
 
-    function renderRow({cols, keyProps}) {
+    function renderRow({cols}) {
         return (
             <Row {...rowProps}>
                 {cols.map((col, index) => {
+                    console.log("grid.children?.nodes: ",grid.children?.nodes)
                     const node = grid.children?.nodes[index];
+                    console.log("node: ",node)
+
+                    const{breakpoint,className} = col;
                     return (
-                        <Col key={node.uuid} {...{[keyProps]: col}}>
+                        <Col key={node.uuid} {...breakpoint} className={className}>
                             {renderComponent(node)}
                         </Col>
                     );
@@ -59,16 +74,34 @@ function BS4Row({grid, mixins, children}) {
 
     function getGrid() {
         if (mixins.includes(types.predefinedGrid)) {
+            console.log("cols 1: ",grid.grid?.value?.split('_'))
+            const cols = grid.grid?.value?.split('_')
+                .map(col => ({breakpoint:{md:col}}))
+            console.log("cols 2: ",cols)
             return renderRow({
-                cols: grid.grid?.value?.split('_'),
-                keyProps: 'md',
+                cols
             });
         }
 
+//col-lg-4 order-lg-2,col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1,col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3
         if (mixins.includes(types.customGrid)) {
+            console.log("customGrid : ",grid.gridClasses);
+            const cols = grid.gridClasses?.value?.split(',')
+                .map(col => {
+                    // col = "col-lg-4 order-lg-2"
+                    const regex = /col-(?<key>[a-z]{2})-(?<value>[0-9]{1,2})/gm;
+                    let className = col;
+                    const breakpoint = {};
+                    col.replace(regex,(match,key,value) => {
+                        breakpoint[key]=value;
+                        className = className.replace(match,'');
+                    });
+                    return {breakpoint,className}
+                    // console.log("breakpoint :",breakpoint);
+                    // console.log("className :",className);
+                })
             return renderRow({
-                cols: grid.gridClasses?.value?.split(','),
-                keyProps: 'className',
+                cols
             });
         }
     }

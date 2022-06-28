@@ -11,7 +11,7 @@ import Container from './components/Container';
 import Row from './components/Row';
 
 function BS4Grid({id}) {
-    const {workspace, locale} = useContext(JahiaCtx);
+    const {workspace,locale} = useContext(JahiaCtx);
     const mainResourcePath = React.useContext(MainResourceCtx);
 
     const {data, error, loading} = useQuery(queryGrid, {
@@ -37,7 +37,7 @@ function BS4Grid({id}) {
     }
 
     // Console.log("[BS4Grid] grid : ",grid);
-    const mixins = grid.mixins?.map(mixin => mixin.name) || [];
+    const mixins = grid.mixinTypes?.map(mixin => mixin.name) || [];
 
     return (
         <Section grid={grid} mixins={mixins}>

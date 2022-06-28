@@ -18,9 +18,9 @@ export const queryGrid = gql`query (
                 ){
                     output
                 }
-                mixins:mixinTypes{
-                    name
-                }
+#                mixins:mixinTypes{
+#                    name
+#                }
                 ...CoreNodeFields
                 ...SectionFields
                 ...ContainerFields
