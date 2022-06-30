@@ -1,4 +1,4 @@
-import {getClient, getPageInfo} from '@jahia/nextjs-lib';
+import {getClient, getPageInfo} from '@jahia/nextjs-sdk';
 import cms from '../../jahia';
 
 const getHTMLError = ({message, path, locale}) => `

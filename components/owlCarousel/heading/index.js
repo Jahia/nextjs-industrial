@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {JahiaCtx} from '@jahia/nextjs-lib';
+import {JahiaCtx} from '@jahia/nextjs-sdk';
 import CarouselEdit from './Edit';
 import CarouselLive from './Live';
 

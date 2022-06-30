@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {JahiaCtx, JahiaModuleTag, RichText, useNode} from '@jahia/nextjs-lib';
+import {JahiaCtx, JahiaModuleTag, RichText, useNode} from '@jahia/nextjs-sdk';
 
 import styles from './halfBlock.module.css';
 import Image from './images/HalfBlock';

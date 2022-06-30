@@ -1,5 +1,5 @@
 import React from 'react';
-import {Area} from "@jahia/nextjs-lib";
+import {Area} from "@jahia/nextjs-sdk";
 import * as PropTypes from "prop-types";
 import cms from "../jahia"
 import Container from "react-bootstrap/Container";

@@ -1,5 +1,5 @@
 import React from 'react';
-import {JahiaCtx, getImageURI} from '@jahia/nextjs-lib';
+import {JahiaCtx, getImageURI} from '@jahia/nextjs-sdk';
 import classNames from 'classnames';
 import styles from './halfBlock.module.css';
 import * as PropTypes from 'prop-types';

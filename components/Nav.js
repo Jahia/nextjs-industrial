@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {JahiaCtx, JahiaLink as Link, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {JahiaCtx, JahiaLink as Link, CORE_NODE_FIELDS} from '@jahia/nextjs-sdk';
 import {gql, useQuery} from '@apollo/client';
 import {contentTypes} from './jahia/common';
 import classnames from 'classnames';

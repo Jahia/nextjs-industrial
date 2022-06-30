@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNode} from '@jahia/nextjs-lib';
+import {useNode} from '@jahia/nextjs-sdk';
 import * as PropTypes from 'prop-types';
 import * as Icons from 'react-bootstrap-icons';
 

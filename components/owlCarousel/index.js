@@ -2,7 +2,7 @@ import React from 'react';
 import {OWCHeading} from './heading';
 import {OWCTestimonial} from './testimonial';
 import * as PropTypes from 'prop-types';
-import {useNode} from '@jahia/nextjs-lib';
+import {useNode} from '@jahia/nextjs-sdk';
 
 const carouselType = {
     heading: OWCHeading,

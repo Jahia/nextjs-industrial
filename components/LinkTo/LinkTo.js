@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styles from './linkTo.module.css';
 import NextLink from 'next/link';
-import {JahiaLink} from '@jahia/nextjs-lib';
+import {JahiaLink} from '@jahia/nextjs-sdk';
 import classnames from 'classnames';
 
 function Fallback({fallback, children}) {

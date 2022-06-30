@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {JahiaCtx, DefaultImage} from '@jahia/nextjs-lib';
+import {JahiaCtx, DefaultImage} from '@jahia/nextjs-sdk';
 import {useQuery} from '@apollo/client';
 
 import {queryWidenRef} from './gqlQuery';

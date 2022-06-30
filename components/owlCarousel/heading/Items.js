@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from './Item';
-import {JahiaCtx, JahiaModuleTag} from '@jahia/nextjs-lib';
+import {JahiaCtx, JahiaModuleTag} from '@jahia/nextjs-sdk';
 import * as PropTypes from 'prop-types';
 
 function Heading({nodes}) {

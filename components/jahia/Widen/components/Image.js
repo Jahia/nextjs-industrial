@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {JahiaCtx, CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {JahiaCtx, CORE_NODE_FIELDS} from '@jahia/nextjs-sdk';
 import {gql, useQuery} from '@apollo/client';
 
 import * as PropTypes from 'prop-types';

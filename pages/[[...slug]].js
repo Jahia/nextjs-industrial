@@ -1,4 +1,4 @@
-import {JahiaPage} from '@jahia/nextjs-lib';
+import {JahiaPage} from '@jahia/nextjs-sdk';
 
 export default JahiaPage.Component;
 export const {getStaticPaths} = JahiaPage;

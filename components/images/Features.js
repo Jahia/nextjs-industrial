@@ -1,5 +1,5 @@
 import React from 'react';
-import {JahiaCtx, DefaultImage, getImageURI} from '@jahia/nextjs-lib';
+import {JahiaCtx, DefaultImage, getImageURI} from '@jahia/nextjs-sdk';
 import * as PropTypes from 'prop-types';
 
 function FeatureImage({path, alt, className}) {

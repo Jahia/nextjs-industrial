@@ -1,5 +1,5 @@
 import React from 'react';
-import {JahiaCtx, useNode, DefaultImage} from '@jahia/nextjs-lib';
+import {JahiaCtx, useNode, DefaultImage} from '@jahia/nextjs-sdk';
 import * as PropTypes from 'prop-types';
 import {LinkTo, linkToProperties} from './LinkTo';
 

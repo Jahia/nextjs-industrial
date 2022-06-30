@@ -1,4 +1,4 @@
-import {templates} from '@jahia/nextjs-lib';
+import {templates} from '@jahia/nextjs-sdk';
 const excludedName = ['default'];
 
 export default function handler(req, res) {

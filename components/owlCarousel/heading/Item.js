@@ -1,5 +1,5 @@
 import React from 'react';
-import {getImageURI, JahiaCtx, useNode} from '@jahia/nextjs-lib';
+import {getImageURI, JahiaCtx, useNode} from '@jahia/nextjs-sdk';
 // Import {gql, useQuery} from "@apollo/client";
 import styles from './item.module.css';
 import classNames from 'classnames';

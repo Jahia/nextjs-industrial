@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {types} from '../types';
-import {JahiaComponent} from '@jahia/nextjs-lib';
+import {JahiaComponent} from '@jahia/nextjs-sdk';
 
 //Note : revoir la creation de la grid
 //col-lg-4 order-lg-2,col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1,col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3

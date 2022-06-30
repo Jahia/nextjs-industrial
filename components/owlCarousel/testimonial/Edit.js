@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './edit.module.css';
 import Items from './Items';
 import * as PropTypes from 'prop-types';
-import {JahiaModuleTag} from '@jahia/nextjs-lib';
+import {JahiaModuleTag} from '@jahia/nextjs-sdk';
 import cms from '../../../jahia';
 
 function OwlCarousel({carousel}) {

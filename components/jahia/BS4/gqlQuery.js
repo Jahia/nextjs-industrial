@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {CORE_NODE_FIELDS} from '@jahia/nextjs-lib';
+import {CORE_NODE_FIELDS} from '@jahia/nextjs-sdk';
 
 export const queryGrid = gql`query (
         $workspace:Workspace!,
